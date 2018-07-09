@@ -13,11 +13,12 @@
   align-items: center;
   align-content: center;
   flex-basis: max-content;
+  border-bottom: 1px solid #d3d3d3;
 }
 
-.List li:nth-child(odd){background-color: #f2f3f4;}
+{/*.List li:nth-child(odd){background-color: #f2f3f4;}
 
-.List li:nth-child(even){background-color: #fbfcfd;}
+.List li:nth-child(even){background-color: #fbfcfd;}*/}
 
 .List li:hover button {
   display: inline-block;
