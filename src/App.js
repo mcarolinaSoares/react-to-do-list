@@ -1,74 +1,115 @@
 import React, { Component } from 'react';
 import './App.css';
+import './Qmark.css';
+import './List.css';
+import './Tools.css';
 import Qmark from './Qmark.js';
 import List from './List.js';
+import Tools from './Tools.js';
+import {VIEW_ALL, VIEW_ACTIVE, VIEW_COMPLETED} from './globals.js';
 
 class App extends Component {
 
   state= {
-      todos: [],
-      completed:[],
+    todos: [],
+    completed:[],
+    view: VIEW_ALL,
   }
 
-addTodo = (todo) => {
+  changeView= (newView) =>{
+    this.setState({view: newView});
+  }
 
-  console.log(this.state);
-  this.setState({ todos: this.state.todos.concat(todo)});
-}
+  clearLists= () =>{
+    this.setState({
+      completed: [],
+      todos: [],
+      view: VIEW_ALL,
+    });
+  }
 
-doneTodo = (index) => {
+  addTodo = (todo) => {
 
-  const todos = this.state.todos;
-  const removeTodos = todos.splice(index, 1);
+    console.log(this.state);
+    this.setState({ todos: this.state.todos.concat(todo)});
+  }
 
-  this.setState({
-    completed: this.state.completed.concat(removeTodos),
-    todos: todos
-  });
-}
+  doneTodo = (index) => {
 
-notDoneTodo = (index) =>{
+    const todos = this.state.todos;
+    const removeTodos = todos.splice(index, 1);
 
-  const completed = this.state.completed;
-  const removeCompleted = completed.splice(index, 1);
+    this.setState({
+      completed: this.state.completed.concat(removeTodos),
+      todos: todos
+    });
+  }
 
-  this.setState({
-    todos: this.state.todos.concat(removeCompleted),
-    completed: completed
-  });
-}
+  notDoneTodo = (index) =>{
 
+    const completed = this.state.completed;
+    const removeCompleted = completed.splice(index, 1);
+
+    this.setState({
+      todos: this.state.todos.concat(removeCompleted),
+      completed: completed
+    });
+  }
+
+  componentDidMount(){
+    const state= localStorage.getItem("state");
+    console.log(state);
+    this.setState(JSON.parse(state));
+  }
+
+  componentDidUpdate(){
+    localStorage.setItem("state", JSON.stringify(this.state));
+    console.log(localStorage.getItem("state"));
+  }
 
   render() {
+    const { view } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">todos</h1>
+        <header className="header">
+          <h1 className="title">todos</h1>
         </header>
 
         <Qmark
           addTodo = {this.addTodo}
         />
 
-        <List
-          items={this.state.todos}
-          onItemClicked= {this.doneTodo}
-          label="mark as done"
-        />
+        {view===VIEW_ALL && <p className="p">Active</p>}
+        {(view === VIEW_ACTIVE || view === VIEW_ALL) &&
+          <List
+            items={this.state.todos}
+            onItemClicked= {this.doneTodo}
+            label="mark as done"
+          />
+        }
 
-        <List
-        items={this.state.completed}
-        onItemClicked= {this.notDoneTodo}
-        label= "oh"
-        />
+        {view===VIEW_ALL && <p className="p">Completed</p>}
+        {(view === VIEW_COMPLETED || view === VIEW_ALL) &&
+          <List
+            items={this.state.completed}
+            onItemClicked= {this.notDoneTodo}
+            label= "oh"
+          />
+        }
 
-        <div>
-
+        <div className= "App">
+          <Tools
+            view={this.state.view}
+            changeView={this.changeView}
+            lengthTodos= {this.state.todos.length}
+            lengthCompleted= {this.state.completed.length}
+            clearLists= {this.clearLists}
+          />
         </div>
 
       </div>
-    );
-  }
+    );}
 }
 
 export default App;

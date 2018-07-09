@@ -14,11 +14,11 @@ class Tools extends Component {
 
   render(){
     return(
-      <div>
+      <div className="Tools">
 
         <button
-          className= {this.props.view === VIEW_ALL? "active" : ""}
-          onClick= {() => this.props.changeView(VIEW_ALL)}
+          className={this.props.view === VIEW_ALL? "active" : ""}
+          onClick={() => this.props.changeView(VIEW_ALL)}
         >
           All ({this.props.lengthCompleted + this.props.lengthTodos})
         </button>
@@ -39,9 +39,11 @@ class Tools extends Component {
         </button>
 
         <button
+          //{/*className= "Tools"*/}
           onClick= {() => this.props.clearLists()}
         >
           Clear All
+
         </button>
 
       </div>

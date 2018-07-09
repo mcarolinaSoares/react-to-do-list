@@ -19,15 +19,16 @@ class Qmark extends Component {
   render() {
     return (
       <form
+        className="Qmark"
         onSubmit={this.handleSubmit}>
-      <label>
-        <input
-          type="text"
-          value= {this.state.value}
-          onChange= {this.handleChange}
-          placeholder="What needs to be done?"
-        />
-      </label>
+        <label>
+          <input
+            type="text"
+            value= {this.state.value}
+            onChange= {this.handleChange}
+            placeholder="What needs to be done?"
+          />
+        </label>
       </form>
     )
   }

@@ -1,12 +1,34 @@
 .List {
   text-align: center;
+  max-width: 500px;
+  list-style-type: none;
+  margin: 30px auto;
+  padding: 0;
+}
+
+.List li {
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  flex-basis: max-content;
+}
+
+.List li:nth-child(odd){background-color: #f2f3f4;}
+
+.List li:nth-child(even){background-color: #fbfcfd;}
+
+.List li:hover button {
+  display: inline-block;
 }
 
 .List button {
-  tbackground-color: #f2f3f4;
-  display: inline-block;
+  display: none;
+  background-color: #DCDCDC;
+  justify-content: space-around;
   font-weight: 300;
-  text-align: center;
+  text-align: justify;
   white-space: nowrap;
   vertical-align: middle;
   -webkit-user-select: none;
